@@ -216,9 +216,11 @@ foods_br = [
 
 @app.route('/api/detect', methods=['POST'])
 def detect_food():
+    print(f"Request data: {request.data}")
     img_bytes = base64.b64decode(request.data)
     nparr = np.frombuffer(img_bytes, np.uint8)
     img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    print("Image received for processing.")
 
     model = YOLO('assets/best.pt')
     results = model.predict(img, save=False, conf=0.5)
